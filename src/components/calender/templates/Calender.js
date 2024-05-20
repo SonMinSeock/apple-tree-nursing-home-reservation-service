@@ -2,12 +2,12 @@ import React from "react";
 import { addDays, endOfMonth, endOfWeek, format, startOfMonth, startOfWeek } from "date-fns";
 import { useState } from "react";
 import { CalendarBox, Layout } from "./Calender.style";
-import Header from "../../molecules/Header";
-import WeekLayout from "../../molecules/WeekLayout";
-import Daylayout from "../../molecules/Daylayout";
-import DayBox from "../../atoms/DayBox";
-import Day from "../../molecules/Day";
-import Week from "../../atoms/Week";
+import Header from "../molecules/Header";
+import WeekLayout from "../molecules/WeekLayout";
+import Daylayout from "../molecules/Daylayout";
+import DayBox from "../atoms/DayBox";
+import Day from "../molecules/Day";
+import Week from "../atoms/Week";
 
 function Calender() {
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 달 (2024-05-20)

@@ -11,8 +11,6 @@ const StyleButton = styled.div`
 `;
 
 function Button({ position, currentDate, setCurrentDate }) {
-  // position prop이 "left"이면 왼쪽 화살표 아이콘 버튼 보여준다.
-
   // date-fns 함수인 subMonths를 사용하여 클릭 시 현재 달에서 1달을 빼줌
   const prevMonth = () => {
     setCurrentDate(subMonths(currentDate, 1));
@@ -23,6 +21,7 @@ function Button({ position, currentDate, setCurrentDate }) {
     setCurrentDate(addMonths(currentDate, 1));
   };
 
+  // position prop이 "left"이면 왼쪽 화살표 아이콘 버튼 보여준다.
   const render =
     position === "left" ? (
       <StyleButton onClick={prevMonth}>

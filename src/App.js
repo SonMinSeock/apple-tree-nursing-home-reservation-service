@@ -1,5 +1,5 @@
 import "./App.css";
-import Calender from "./components/templates/calender/Calender";
+import Calender from "./components/calender/templates/Calender";
 
 function App() {
   return (
