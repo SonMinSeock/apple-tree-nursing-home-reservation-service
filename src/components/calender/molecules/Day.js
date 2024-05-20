@@ -1,4 +1,4 @@
-import { format, isSaturday, isSunday, isToday } from "date-fns";
+import { isToday } from "date-fns";
 import React from "react";
 import styled from "styled-components";
 import DaySpan from "../atoms/DaySpan";
