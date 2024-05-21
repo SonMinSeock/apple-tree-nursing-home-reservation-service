@@ -9,21 +9,23 @@ const StyleInput = styled.input`
 
 const Input = ({ attrInputs, currentInputIndex, onChange }) => {
   const renderInputs = () => {
-    return attrInputs.map((attr, index) => {
-      if (index <= currentInputIndex) {
-        return (
-          <StyleInput
-            key={attr.id}
-            type={attr.type}
-            maxLength={attr.type === "tel" ? attr.maxLength : ""}
-            placeholder={attr.placeholder}
-            onChange={(event) => onChange(event, attr.id, index)}
-            value={attr.value}
-          />
-        );
-      }
-      return null;
-    });
+    return attrInputs
+      .map((attr, index) => {
+        if (index <= currentInputIndex) {
+          return (
+            <StyleInput
+              key={attr.id}
+              type={attr.type}
+              maxLength={attr.type === "tel" ? attr.maxLength : ""}
+              placeholder={attr.placeholder}
+              onChange={(event) => onChange(event, attr.id, index)}
+              value={attr.value}
+            />
+          );
+        }
+        return null;
+      })
+      .reverse();
   };
   return <>{renderInputs()}</>;
 };
