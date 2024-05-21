@@ -9,7 +9,6 @@ const StyleButton = styled.div`
   align-items: center;
   cursor: pointer;
 `;
-
 function Button({ position, currentDate, setCurrentDate }) {
   // date-fns 함수인 subMonths를 사용하여 클릭 시 현재 달에서 1달을 빼줌
   const prevMonth = () => {

@@ -1,10 +1,9 @@
-import "./App.css";
-import Calender from "./components/calender/templates/Calender";
+import Reservation from "./components/forms/reservation/templates/Reservation";
 
 function App() {
   return (
     <main>
-      <Calender />
+      <Reservation />
     </main>
   );
 }

@@ -7,7 +7,6 @@ const StyleDaySpan = styled.span`
   position: relative;
   font-weight: 700;
 `;
-
 function DaySpan({ currentDate, startDay, formattedDate }) {
   return (
     <StyleDaySpan

@@ -8,7 +8,6 @@ const StyleWeek = styled.div`
   justify-content: center;
   padding: 10px;
 `;
-
 function Week({ children }) {
   return <StyleWeek>{children}</StyleWeek>;
 }

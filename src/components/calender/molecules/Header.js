@@ -6,7 +6,6 @@ const StyleHeader = styled.div`
   display: flex;
   justify-content: center;
 `;
-
 function Header({ currentDate, setCurrentDate }) {
   return (
     <StyleHeader>

@@ -9,7 +9,6 @@ const StyleTitle = styled.div`
   display: flex;
   align-items: center;
 `;
-
 function Title({ currentDate }) {
   return (
     <StyleTitle>
