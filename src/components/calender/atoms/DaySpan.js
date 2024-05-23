@@ -7,7 +7,7 @@ const StyleDaySpan = styled.span`
   position: relative;
   font-weight: 700;
 `;
-function DaySpan({ currentDate, startDay, formattedDate }) {
+function DaySpan({ currentDate, startDay, formattedDay }) {
   return (
     <StyleDaySpan
       style={{
@@ -26,7 +26,7 @@ function DaySpan({ currentDate, startDay, formattedDate }) {
             : "#000",
       }}
     >
-      {formattedDate}
+      {formattedDay}
     </StyleDaySpan>
   );
 }

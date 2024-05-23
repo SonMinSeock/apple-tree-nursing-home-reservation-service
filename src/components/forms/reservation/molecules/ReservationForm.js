@@ -3,9 +3,9 @@ import Input from "../atoms/Input";
 
 function ReservationForm() {
   const [attrInputs, setAttrInputs] = useState([
-    { id: Math.random(), placeholder: "전화번호를 입력하세요", type: "tel", value: "", maxLength: 11 },
-    { id: Math.random(), placeholder: "층 입력하세요", type: "number", value: "" },
     { id: Math.random(), placeholder: "성함을 입력하세요", type: "text", value: "" },
+    { id: Math.random(), placeholder: "층 입력하세요", type: "number", value: "" },
+    { id: Math.random(), placeholder: "전화번호를 입력하세요", type: "tel", value: "", maxLength: 11 },
   ]);
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const timerRef = useRef(null); // 타이머 id 초기값 null로 설정.

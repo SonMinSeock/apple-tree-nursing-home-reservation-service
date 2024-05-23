@@ -9,7 +9,7 @@ import DayBox from "../atoms/DayBox";
 import Day from "../molecules/Day";
 import Week from "../atoms/Week";
 
-function Calender() {
+function Calender({ setSelectDate, selectDate }) {
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 달 (2024-05-20)
   const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜 (2024-05-01)
   const monthEnd = endOfMonth(monthStart); // 현재 달의 마지막 날짜 (2024-05-31)
@@ -24,14 +24,16 @@ function Calender() {
   const day = []; // 한 달의 전체 데이터
   let startDay = startDate; // 현재 달의 첫 주 시작 날짜
   let days = []; // 한 주의 전체 데이터
-  let formattedDate = ""; // 배열 삽입용 하루 날짜의 데이터
+  let formattedDay = ""; // 배열 삽입용 하루 날짜의 데이터
+  let formattedDate = "";
 
   // while문은 현재 달의 첫 주 시작 날짜부터 하루씩 더해가다가 현재 달의 마지막 주 마지막 날짜보다
   // 커지면 한 달의 날짜가 끝난 것이므로 종료됩니다.
   while (startDay <= endDate) {
     for (let i = 0; i < 7; i++) {
       // 한 주는 7일이므로 7번의 반복문 실행
-      formattedDate = format(startDay, "d"); // 날짜의 데이터는 숫자로 format됩니다.
+      formattedDay = format(startDay, "d"); // 날짜의 데이터는 숫자로 format됩니다.
+      formattedDate = format(startDay, "yyyy-MM-dd");
       days.push(
         // 한 주의 배열에 하루씩 날짜 삽입합니다.
         <Day
@@ -39,6 +41,9 @@ function Calender() {
           currentDate={currentDate}
           startDay={startDay}
           formattedDate={formattedDate}
+          formattedDay={formattedDay}
+          selectDate={selectDate}
+          setSelectDate={setSelectDate}
         />
       );
       startDay = addDays(startDay, 1); // 하루를 삽입하고 날짜를 하루 더해줍니다.
