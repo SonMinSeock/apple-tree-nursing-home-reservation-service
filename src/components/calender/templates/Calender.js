@@ -21,6 +21,27 @@ function Calender({ setSelectDate, selectDate }) {
     return <Week key={index}>{item}</Week>;
   });
 
+  /*
+  // 어드민에서 주 단위로 예약 내역데이터 보내줄때 참고 할 코드. 오늘 날짜 기준으로 이번주 월, 일요일 날짜 받는다.
+  const startOfWeekDate = startOfWeek(currentDate, { weekStartsOn: 1 }); // 주 시작일을 월요일로 설정합니다.
+  const endOfWeekDate = endOfWeek(currentDate, { weekStartsOn: 1 }); // 주 시작일을 월요일로 설정합니다.
+
+  const formattedStartOfWeekDate = format(startOfWeekDate, "yyyy-MM-dd");
+  const formattedEndOfWeekDate = format(endOfWeekDate, "yyyy-MM-dd");
+
+  console.log("이번 주의 월요일:", formattedStartOfWeekDate);
+  console.log("이번 주의 일요일:", formattedEndOfWeekDate);
+ */
+
+  /*
+  // 오늘날짜 기준으로 30일 후의 날짜로 보내주도록 한다.
+  const dateAfter30Days = addDays(currentDate, 30); // 30일 후의 날짜를 계산합니다.
+
+  const formattedDateAfter30Days = format(dateAfter30Days, "yyyy-MM-dd"); // 날짜를 'yyyy-MM-dd' 형식으로 포맷합니다.
+
+  console.log("오늘 날짜 기준으로 30일 후의 날짜:", formattedDateAfter30Days);
+  */
+
   const day = []; // 한 달의 전체 데이터
   let startDay = startDate; // 현재 달의 첫 주 시작 날짜
   let days = []; // 한 주의 전체 데이터
