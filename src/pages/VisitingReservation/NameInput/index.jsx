@@ -6,27 +6,34 @@ import Form from "../../../components/reservation/molecules/Form";
 import Container from "../../../components/reservation/templates/Container";
 import Header from "../../../components/reservation/molecules/Header";
 import Wrapper from "../../../components/reservation/molecules/Wrapper";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Label } from "../../../components/reservation/atoms/Label/Label.style";
 import { FaAngleLeft } from "react-icons/fa6";
 import { BackBar } from "../../../components/reservation/molecules/BackBar/BackBar.style";
 
-const NameInputPage = () => {
+const NameInputPage = ({ type }) => {
   const nameInputRef = useRef();
 
   const navigate = useNavigate();
 
+  const {
+    state: { reservation },
+  } = useLocation();
+
+  console.log(reservation);
   const onSubmit = (event) => {
     event.preventDefault();
     const enteredName = nameInputRef.current.value;
 
-    if (enteredName) {
-      const reservation = {
-        type: "VISIT",
-        name: enteredName,
-      };
+    if (type === "reservation" && enteredName) {
+      reservation.name = enteredName;
+
       navigate("/visitingReservation/relationship-input", {
         state: { reservation },
+      });
+    } else if (type === "check" && enteredName) {
+      navigate("/reservation-check/list", {
+        state: { name: enteredName },
       });
     }
   };

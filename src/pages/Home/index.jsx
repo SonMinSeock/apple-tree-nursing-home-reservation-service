@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
 import HomePageImage from "../../assets/apple-tree.jpeg";
@@ -96,10 +96,14 @@ const TextOverlay = styled.div`
 
 const Home = () => {
   const navigate = useNavigate();
+  // 예약죄회에 대한 이름 입력값 상태.
+  const [reservationChekName, setReservationChekName] = useState("");
 
   // 리다이렉트 핸들러
-  const redirectHandler = (path) => {
-    if (path) {
+  const redirectHandler = (path, type) => {
+    if ((path && type === "OUTING") || type === "VISIT") {
+      navigate(path, { state: { reservation: { type } } });
+    } else {
       navigate(path);
     }
   };
@@ -121,19 +125,19 @@ const Home = () => {
         </ImageContainer>
         <Box>공지사항</Box>
         <ButtonContainer>
-          <Button onClick={redirectHandler.bind(null, "/visitingReservation/name-input")}>
+          <Button onClick={redirectHandler.bind(null, "/visitingReservation/name-input", "VISIT")}>
             <span>면회 신청하기</span>
             <span className="icon">
               <FaChevronRight />
             </span>
           </Button>
-          <Button>
+          <Button onClick={redirectHandler.bind(null, "/outingReservation/name-input", "OUTING")}>
             <span>외출 신청하기</span>
             <span className="icon">
               <FaChevronRight />
             </span>
           </Button>
-          <Button>
+          <Button onClick={redirectHandler.bind(null, "/reservation-check/name-input")}>
             <span>예약 조회하기</span>
             <span className="icon">
               <FaChevronRight />

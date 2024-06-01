@@ -33,9 +33,15 @@ const DateSelectPage = () => {
       postReservation.time = `${selectTime.backendTime}`;
 
       console.log(postReservation);
-      navigate("/visitingReservation/result", {
-        state: { reservation },
-      });
+      if (reservation.type === "VISIT") {
+        navigate("/visitingReservation/result", {
+          state: { reservation },
+        });
+      } else {
+        navigate("/outingReservation/whether-to-eat", {
+          state: { reservation, postReservation },
+        });
+      }
     }
   };
 
