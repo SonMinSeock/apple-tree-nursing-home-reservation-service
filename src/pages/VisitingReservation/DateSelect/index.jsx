@@ -1,3 +1,4 @@
+// DateSelectPage.js
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../../../components/reservation/templates/Container";
@@ -19,7 +20,6 @@ const DateSelectPage = () => {
     state: { reservation },
   } = useLocation();
 
-  console.log(selectTime);
   const onSubmit = (event) => {
     event.preventDefault();
     const postReservation = {
@@ -32,7 +32,6 @@ const DateSelectPage = () => {
       postReservation.date = selectDate;
       postReservation.time = `${selectTime.backendTime}`;
 
-      console.log(postReservation);
       if (reservation.type === "VISIT") {
         navigate("/visitingReservation/result", {
           state: { reservation },
@@ -45,6 +44,8 @@ const DateSelectPage = () => {
     }
   };
 
+  console.log(selectTime);
+
   return (
     <Container>
       <BackBar onClick={() => navigate(-1)}>
@@ -55,8 +56,18 @@ const DateSelectPage = () => {
       </Header>
       <Form onSubmit={onSubmit}>
         <Calender selectDate={selectDate} setSelectDate={setSelectDate} />
-        {selectDate && <Timetable setSelectTime={setSelectTime} />}
-        <Button>다음</Button>
+        {selectDate && <Timetable setSelectTime={setSelectTime} type={reservation.type} />}
+        <div style={{ height: "100px" }} /> {/* 시간 테이블 아래에 추가된 빈 div */}
+        {selectDate && (
+          <Button
+            type="submit"
+            style={{ position: "fixed", bottom: "0", width: "100%" }}
+            className={selectDate && selectTime && "activate"}
+            disabled={!selectDate || !selectTime}
+          >
+            다음
+          </Button>
+        )}
       </Form>
     </Container>
   );

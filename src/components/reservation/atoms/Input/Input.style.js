@@ -8,4 +8,7 @@ export const Input = styled.input`
   padding: 0.7rem;
   border: 2px solid #78d6bb;
   border-radius: 0.625rem;
+  &::placeholder {
+    font-weight: normal;
+  }
 `;

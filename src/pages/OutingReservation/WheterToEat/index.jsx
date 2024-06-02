@@ -50,7 +50,7 @@ const WheterToEatPage = () => {
 
   return (
     <Container>
-      <BackBar>
+      <BackBar onClick={() => navigate(-1)}>
         <FaAngleLeft />
       </BackBar>
       <Header>
@@ -65,7 +65,9 @@ const WheterToEatPage = () => {
             원외 식사
           </SelectBox>
         </Flexbox>
-        <Button>다음</Button>
+        <Button className={selectWheterToEat && "activate"} disabled={!selectWheterToEat}>
+          다음
+        </Button>
       </Form>
     </Container>
   );

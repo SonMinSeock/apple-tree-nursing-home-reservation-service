@@ -1,27 +1,4 @@
-import React from "react";
-import { addDays, endOfMonth, endOfWeek, format, startOfMonth, startOfWeek } from "date-fns";
-import { useState } from "react";
-import { CalendarBox, Layout } from "./Calender.style";
-import Header from "../molecules/Header";
-import WeekLayout from "../molecules/WeekLayout";
-import Daylayout from "../molecules/Daylayout";
-import DayBox from "../atoms/DayBox";
-import Day from "../molecules/Day";
-import Week from "../atoms/Week";
-
-function Calender({ setSelectDate, selectDate }) {
-  const [currentDate, setCurrentDate] = useState(new Date()); // 현재 달 (2024-05-20)
-  const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜 (2024-05-01)
-  const monthEnd = endOfMonth(monthStart); // 현재 달의 마지막 날짜 (2024-05-31)
-  const startDate = startOfWeek(monthStart); // 현재 달의 첫 주 시작 날짜 (2024-04-30)
-  const endDate = endOfWeek(monthEnd); // 현재 달의 마지막 주 마지막 날짜
-  const week = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 데이터
-  // week 배열을 순회하면서 요일을 하나씩 출력
-  const weeks = week.map((item, index) => {
-    return <Week key={index}>{item}</Week>;
-  });
-
-  /*
+/*
   // 어드민에서 주 단위로 예약 내역데이터 보내줄때 참고 할 코드. 오늘 날짜 기준으로 이번주 월, 일요일 날짜 받는다.
   const startOfWeekDate = startOfWeek(currentDate, { weekStartsOn: 1 }); // 주 시작일을 월요일로 설정합니다.
   const endOfWeekDate = endOfWeek(currentDate, { weekStartsOn: 1 }); // 주 시작일을 월요일로 설정합니다.
@@ -33,7 +10,7 @@ function Calender({ setSelectDate, selectDate }) {
   console.log("이번 주의 일요일:", formattedEndOfWeekDate);
  */
 
-  /*
+/*
   // 오늘날짜 기준으로 30일 후의 날짜로 보내주도록 한다.
   const dateAfter30Days = addDays(currentDate, 30); // 30일 후의 날짜를 계산합니다.
 
@@ -41,6 +18,54 @@ function Calender({ setSelectDate, selectDate }) {
 
   console.log("오늘 날짜 기준으로 30일 후의 날짜:", formattedDateAfter30Days);
   */
+
+import React, { useState } from "react";
+import {
+  addDays,
+  endOfMonth,
+  endOfWeek,
+  format,
+  startOfMonth,
+  startOfWeek,
+  isBefore,
+  isAfter,
+  subMonths,
+  addMonths,
+} from "date-fns";
+import { CalendarBox, Layout } from "./Calender.style";
+import Header from "../molecules/Header";
+import WeekLayout from "../molecules/WeekLayout";
+import Daylayout from "../molecules/Daylayout";
+import DayBox from "../atoms/DayBox";
+import Day from "../molecules/Day";
+import Week from "../atoms/Week";
+
+function Calender({ setSelectDate, selectDate }) {
+  const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
+  const today = new Date();
+
+  // 이전 달로 이동을 막기 위해 현재 달의 첫 날을 체크합니다.
+  const handlePreviousMonth = () => {
+    const previousMonth = subMonths(currentDate, 1);
+    if (isBefore(previousMonth, startOfMonth(today))) {
+      return;
+    }
+    setCurrentDate(previousMonth);
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate(addMonths(currentDate, 1));
+  };
+
+  const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜
+  const monthEnd = endOfMonth(monthStart); // 현재 달의 마지막 날짜
+  const startDate = startOfWeek(monthStart); // 현재 달의 첫 주 시작 날짜
+  const endDate = endOfWeek(monthEnd); // 현재 달의 마지막 주 마지막 날짜
+  const week = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 데이터
+
+  const weeks = week.map((item, index) => {
+    return <Week key={index}>{item}</Week>;
+  });
 
   const day = []; // 한 달의 전체 데이터
   let startDay = startDate; // 현재 달의 첫 주 시작 날짜
@@ -78,12 +103,15 @@ function Calender({ setSelectDate, selectDate }) {
   }
   return (
     <Layout>
-      <Header currentDate={currentDate} setCurrentDate={setCurrentDate} />
+      <Header
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        handlePreviousMonth={handlePreviousMonth}
+        handleNextMonth={handleNextMonth}
+      />
       <CalendarBox>
-        <CalendarBox>
-          <WeekLayout weeks={weeks} />
-          <Daylayout day={day} />
-        </CalendarBox>
+        <WeekLayout weeks={weeks} />
+        <Daylayout day={day} />
       </CalendarBox>
     </Layout>
   );

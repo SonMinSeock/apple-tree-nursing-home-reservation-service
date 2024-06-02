@@ -56,7 +56,7 @@ const ReservationResultPage = () => {
           <Span>{`${renderDate} ${reservation.time.timeFormat} ${reservation.time.clientTime}`}</Span>
         </Flexbox>
         <Text>조회하기를 통해 예약을 확인할 수 있습니다.</Text>
-        <Button>확인</Button>
+        <Button className="activate">확인</Button>
       </Container>
     </>
   );

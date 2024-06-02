@@ -1,38 +1,52 @@
-import { addMonths, subMonths } from "date-fns";
+import React from "react";
+import { subMonths, isSameMonth, startOfMonth } from "date-fns";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import styled from "styled-components";
 
 const StyleButton = styled.div`
-  margin: 0 24px;
+  margin: 0 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 `;
+
 function Button({ position, currentDate, setCurrentDate }) {
-  // date-fns 함수인 subMonths를 사용하여 클릭 시 현재 달에서 1달을 빼줌
+  // 이전 달로 이동하는 함수
   const prevMonth = () => {
-    setCurrentDate(subMonths(currentDate, 1));
+    // 현재 달의 시작일을 가져옵니다.
+    const startOfCurrentMonth = startOfMonth(currentDate);
+    // 현재 달이 오늘의 달과 같으면서 이전 달로 이동 가능한지 확인합니다.
+    if (!isSameMonth(startOfCurrentMonth, new Date())) {
+      // 이전 달로 이동합니다.
+      setCurrentDate(subMonths(currentDate, 1));
+    }
   };
 
-  // date-fns 함수인 addMonths를 사용하여 클릭 시 현재 달에서 1달을 더해줌
+  // 다음 달로 이동하는 함수
   const nextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1));
+    // 다음 달로 이동합니다.
+    setCurrentDate(subMonths(currentDate, -1));
   };
 
-  // position prop이 "left"이면 왼쪽 화살표 아이콘 버튼 보여준다.
-  const render =
-    position === "left" ? (
-      <StyleButton onClick={prevMonth}>
-        <AiOutlineLeft size={24} color="#000" />
-      </StyleButton>
-    ) : (
-      <StyleButton onClick={nextMonth}>
-        <AiOutlineRight size={24} color="#000" />
-      </StyleButton>
-    );
+  // 이전 달로 이동 가능한지 여부를 확인하여 아이콘을 렌더링합니다.
+  const renderButton = () => {
+    if (position === "left" && !isSameMonth(startOfMonth(currentDate), new Date())) {
+      return (
+        <StyleButton onClick={prevMonth}>
+          <AiOutlineLeft size={24} color="#000" />
+        </StyleButton>
+      );
+    } else if (position === "right") {
+      return (
+        <StyleButton onClick={nextMonth}>
+          <AiOutlineRight size={24} color="#000" />
+        </StyleButton>
+      );
+    }
+  };
 
-  return render;
+  return renderButton();
 }
 
 export default Button;

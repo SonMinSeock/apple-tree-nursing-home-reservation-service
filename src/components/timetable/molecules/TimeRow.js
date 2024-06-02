@@ -1,8 +1,10 @@
-// TimeRow.js
 import React from "react";
 import styled from "styled-components";
 import TimeCol from "../atoms/TimeCol";
 
+const Container = styled.div`
+  width: 100%;
+`;
 const StyleTimeRow = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -20,24 +22,38 @@ const Span = styled.span`
 `;
 
 const TimeRow = ({ timeTable, onTimeClick }) => {
+  const handleTimeClick = (id) => {
+    onTimeClick(id);
+  };
+
   const morningTimes = timeTable.filter((timeObj) => timeObj.timeFormat === "오전");
   const afternoonTimes = timeTable.filter((timeObj) => timeObj.timeFormat === "오후");
 
   return (
-    <div>
+    <Container>
       <StyleTimeRow>
         <Span>오전</Span>
         {morningTimes.map((timeObj) => (
-          <TimeCol key={timeObj.id} timeObj={timeObj} onClick={() => onTimeClick(timeObj.id)} />
+          <TimeCol
+            key={timeObj.id}
+            timeObj={timeObj}
+            isSelected={timeObj.isSelect}
+            onClick={() => handleTimeClick(timeObj.id)}
+          />
         ))}
       </StyleTimeRow>
       <StyleTimeRow>
         <Span>오후</Span>
         {afternoonTimes.map((timeObj) => (
-          <TimeCol key={timeObj.id} timeObj={timeObj} onClick={() => onTimeClick(timeObj.id)} />
+          <TimeCol
+            key={timeObj.id}
+            timeObj={timeObj}
+            isSelected={timeObj.isSelect}
+            onClick={() => handleTimeClick(timeObj.id)}
+          />
         ))}
       </StyleTimeRow>
-    </div>
+    </Container>
   );
 };
 export default TimeRow;
