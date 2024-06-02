@@ -7,6 +7,7 @@ import DateSelectPage from "../pages/VisitingReservation/DateSelect";
 import ReservationResultPage from "../pages/ReservationResult";
 import WheterToEatPage from "../pages/OutingReservation/WheterToEat";
 import ReservationListPage from "../pages/ReservationList";
+import VisitingReservationViewerPage from "../pages/admin/VisitingReservationViewerPage";
 
 export const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
             element: <ReservationListPage />,
           },
         ],
+      },
+      {
+        path: "admin",
+        element: <VisitingReservationViewerPage />,
       },
     ],
   },
