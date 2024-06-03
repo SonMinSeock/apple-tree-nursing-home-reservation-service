@@ -44,6 +44,18 @@ function Calender({ setSelectDate, selectDate }) {
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
   const today = new Date();
 
+  // 내일의 날짜
+  const tomorrow = addDays(today, 1);
+
+  // 오늘로부터 30일 후의 날짜
+  const after30Days = addDays(today, 30);
+
+  // 포맷팅된 날짜
+  const formattedTomorrow = format(tomorrow, "yyyy-MM-dd");
+  const formattedAfter30Days = format(after30Days, "yyyy-MM-dd");
+
+  console.log(formattedTomorrow, formattedAfter30Days);
+
   // 이전 달로 이동을 막기 위해 현재 달의 첫 날을 체크합니다.
   const handlePreviousMonth = () => {
     const previousMonth = subMonths(currentDate, 1);
@@ -61,6 +73,7 @@ function Calender({ setSelectDate, selectDate }) {
   const monthEnd = endOfMonth(monthStart); // 현재 달의 마지막 날짜
   const startDate = startOfWeek(monthStart); // 현재 달의 첫 주 시작 날짜
   const endDate = endOfWeek(monthEnd); // 현재 달의 마지막 주 마지막 날짜
+
   const week = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 데이터
 
   const weeks = week.map((item, index) => {

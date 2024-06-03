@@ -1,5 +1,5 @@
 // Timetable.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import TimeRow from "../molecules/TimeRow";
@@ -26,6 +26,33 @@ function Timetable({ selectedTime, setSelectTime, type }) {
     { id: uuidv4(), timeFormat: "오후", clientTime: "03:30", backendTime: "15:30", isSelect: false },
     { id: uuidv4(), timeFormat: "오후", clientTime: "04:00", backendTime: "16:00", isSelect: false },
   ]);
+
+  useEffect(() => {
+    console.log("해당 날짜 면회 또는 외출 가능한지 알려주는 API 호출...");
+    /*
+    [
+    {
+        "time": "10:30:00",
+        "available": false
+    },
+    {
+        "time": "11:00:00",
+        "available": true
+    },
+    {
+        "time": "14:00:00",
+        "available": true
+    },
+    {
+        "time": "15:00:00",
+        "available": true
+    },
+    {
+        "time": "16:00:00",
+        "available": true
+    }]
+    */
+  }, []);
 
   const handleTimeClick = (clickedId) => {
     const tableToSet = type === "VISIT" ? setVisitTimeTable : setOutingTimeTable;
