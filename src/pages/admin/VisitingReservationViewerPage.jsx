@@ -1,30 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import VisitingReservationTable from "./VisitingReservationTable";
+import OutingReservationTable from "./OutingReservationTable";
 
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7열 */
-  grid-template-rows: repeat(7, 1fr); /* 7행 */
-  gap: 10px; /* 그리드 아이템 간의 간격 설정 */
-  width: 100%;
-  height: 100%;
+const HeaderContainer = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #78d6bb;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
-const GridItem = styled.div`
-  background-color: #ccc; /* 그리드 아이템의 배경색 */
-  border: 1px solid #000; /* 그리드 아이템의 테두리 설정 */
+const Title = styled.h1`
+  font-size: 1.875rem;
+`;
+
+const Button = styled.button`
+  font-size: 1.875rem;
+  padding: 1rem;
+  color: #ffffff;
+  background-color: #78d6bb;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: inherit;
+`;
+
+const ReservationControler = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+`;
+
+const ReservationView = styled.div`
+  padding: 10px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  border: 2px solid #78d6bb;
+  border-radius: 20px;
+  padding: 1rem;
+  cursor: pointer;
+  color: #78d6bb;
+  &.view {
+    background-color: #78d6bb;
+    color: #ffffff;
+  }
 `;
 
 const VisitingReservationViewerPage = () => {
+  const [reservationView, setReservationView] = useState("면회 예약"); // 현재 보고있는 예약 상태 처음에 면회 예약 내역들 보여준다.
+
+  const viewBtnChange = (view) => {
+    setReservationView(view);
+  };
   return (
-    <GridContainer>
-      {[...Array(49)].map((_, index) => (
-        <GridItem key={index}>{index + 1}</GridItem>
-      ))}
-    </GridContainer>
+    <>
+      <HeaderContainer>
+        <Title>사과나무요양원 간편 예약 시스템 관리자</Title>
+        <Button>입소자 명부</Button>
+      </HeaderContainer>
+      <ReservationControler>
+        <ReservationView
+          className={reservationView === "면회 예약" ? "view" : ""}
+          onClick={viewBtnChange.bind(null, "면회 예약")}
+        >
+          면회 예약
+        </ReservationView>
+        <ReservationView
+          className={reservationView === "외출 예약" ? "view" : ""}
+          onClick={viewBtnChange.bind(null, "외출 예약")}
+        >
+          외출 예약
+        </ReservationView>
+      </ReservationControler>
+      {reservationView === "면회 예약" && <VisitingReservationTable />}
+      {reservationView === "외출 예약" && <OutingReservationTable />}
+    </>
   );
 };
 
