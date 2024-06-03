@@ -20,7 +20,7 @@ const DateSelectPage = () => {
     state: { reservation },
   } = useLocation();
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     const postReservation = {
       ...reservation,
@@ -33,6 +33,20 @@ const DateSelectPage = () => {
       postReservation.time = `${selectTime.backendTime}`;
 
       if (reservation.type === "VISIT") {
+        await fetch("https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reservationType: reservation.type,
+            elderlyId: reservation.elderlyId,
+            reservationDate: selectDate,
+            reservationTime: selectTime,
+            guardianRelation: reservation.relationship,
+          }),
+        });
+
         navigate("/visitingReservation/result", {
           state: { reservation },
         });
@@ -55,8 +69,15 @@ const DateSelectPage = () => {
         <Title>날짜와 시간을 선택해 주세요</Title>
       </Header>
       <Form onSubmit={onSubmit}>
-        <Calender selectDate={selectDate} setSelectDate={setSelectDate} />
-        {selectDate && <Timetable setSelectTime={setSelectTime} type={reservation.type} />}
+        <Calender reservation={reservation} selectDate={selectDate} setSelectDate={setSelectDate} />
+        {selectDate && (
+          <Timetable
+            setSelectTime={setSelectTime}
+            type={reservation.type}
+            reservation={reservation}
+            selectDate={selectDate}
+          />
+        )}
         <div style={{ height: "100px" }} /> {/* 시간 테이블 아래에 추가된 빈 div */}
         {selectDate && (
           <Button
