@@ -29,13 +29,13 @@ const NameInputPage = ({ type }) => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (type === "reservation" && name.length === 3) {
+    if (type === "reservation" && name.length <= 4) {
       reservation.name = name;
 
       navigate("/visitingReservation/relationship-input", {
         state: { reservation },
       });
-    } else if (type === "check" && name.length === 3) {
+    } else if (type === "check" && name.length <= 4) {
       navigate("/reservation-check/list", {
         state: { name },
       });
@@ -54,9 +54,9 @@ const NameInputPage = ({ type }) => {
         <Form onSubmit={onSubmit}>
           <Wrapper>
             <Label>이름</Label>
-            <Input type="text" placeholder="어르신 성함" maxLength={3} onChange={onChange} />
+            <Input type="text" placeholder="어르신 성함" maxLength="3" onChange={onChange} />
           </Wrapper>
-          <Button className={name.length === 3 && "activate"} disabled={name.length !== 3}>
+          <Button className={name.length <= 4 && "activate"} disabled={name.length < 3}>
             다음
           </Button>
         </Form>
