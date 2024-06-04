@@ -34,6 +34,7 @@ const WheterToEatPage = () => {
   } = useLocation();
   const navigate = useNavigate();
 
+  console.log(postReservation);
   const onSubmit = async (event) => {
     event.preventDefault();
     const enteredWheterToEat = selectWheterToEat;
@@ -50,7 +51,7 @@ const WheterToEatPage = () => {
         body: JSON.stringify({
           reservationType: reservation.type,
           elderlyId: reservation.elderlyId,
-          reservationDate: reservation.selectDate,
+          reservationDate: postReservation.date,
           reservationTime: postReservation.time,
           guardianRelation: reservation.relationship,
           meal: reservation.wheterToEat === "원외 식사" ? "OUTSIDE" : "INSIDE",

@@ -68,6 +68,7 @@ const ReservationListPage = () => {
   const name = location.state?.name || "고객님"; // 이전 페이지에서 전달된 이름 불러오기
   const reservations = location.state?.reservations || [];
 
+  console.log(reservations);
   const formatTimeToAmPm = (time) => {
     // 문자열 시간을 Date 객체로 변환
     const date = parse(time, "HH:mm:ss", new Date());
@@ -94,10 +95,10 @@ const ReservationListPage = () => {
         </Span>
       </Header>
       <Section>
-        {reservations ? (
+        {reservations.length === 0 ? (
           <NoReservationsTitle>예약 내역 없습니다.</NoReservationsTitle>
         ) : (
-          reservations.map((reservation) => {
+          reservations.map((reservation) => (
             <ReservationBox key={reservation.reservationId}>
               <Row>
                 <span>{reservation.reservationType === "VISIT" ? "면회" : "외출"}</span>
@@ -109,8 +110,8 @@ const ReservationListPage = () => {
                 }일`}</span>
                 <span>{formatTimeToAmPm(reservation.reservationTime)}</span>
               </DateRow>
-            </ReservationBox>;
-          })
+            </ReservationBox>
+          ))
         )}
       </Section>
     </Container>

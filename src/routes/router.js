@@ -7,7 +7,11 @@ import DateSelectPage from "../pages/VisitingReservation/DateSelect";
 import ReservationResultPage from "../pages/ReservationResult";
 import WheterToEatPage from "../pages/OutingReservation/WheterToEat";
 import ReservationListPage from "../pages/ReservationList";
-import VisitingReservationViewerPage from "../pages/admin/VisitingReservationViewerPage";
+import ElderyListPage from "../pages/admin/elderyListPage";
+import ReservationDetail from "../pages/admin/ReservationDetail";
+import ReservationUpdatePage from "../pages/admin/ReservationUpdate";
+import ElderyUpdatePage from "../pages/admin/ElderyUpdatePage/ElderyUpdatePage";
+import ReservationViewerPage from "../pages/admin/ReservationViewerPage";
 
 export const router = createBrowserRouter([
   {
@@ -78,7 +82,33 @@ export const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <VisitingReservationViewerPage />,
+        children: [
+          {
+            index: true,
+            element: <ReservationViewerPage />,
+          },
+          {
+            path: "elderly-list",
+            children: [
+              {
+                index: true,
+                element: <ElderyListPage />,
+              },
+              {
+                path: ":elderyId/update",
+                element: <ElderyUpdatePage />,
+              },
+            ],
+          },
+          {
+            path: "reservation-detail",
+            element: <ReservationDetail />,
+          },
+          {
+            path: "reservation-update",
+            element: <ReservationUpdatePage />,
+          },
+        ],
       },
     ],
   },
