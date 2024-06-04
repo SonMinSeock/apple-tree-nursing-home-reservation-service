@@ -8,6 +8,7 @@ import ReservationResultPage from "../pages/ReservationResult";
 import WheterToEatPage from "../pages/OutingReservation/WheterToEat";
 import ReservationListPage from "../pages/ReservationList";
 import VisitingReservationViewerPage from "../pages/admin/VisitingReservationViewerPage";
+import ElderyListPage from "../pages/admin/elderyListPage";
 
 export const router = createBrowserRouter([
   {
@@ -78,7 +79,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <VisitingReservationViewerPage />,
+        children: [
+          {
+            index: true,
+            element: <VisitingReservationViewerPage />,
+          },
+          {
+            path: "elderly-list",
+            element: <ElderyListPage />,
+          },
+        ],
       },
     ],
   },

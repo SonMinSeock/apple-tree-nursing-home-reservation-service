@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import VisitingReservationTable from "./VisitingReservationTable";
 import OutingReservationTable from "./OutingReservationTable";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -56,14 +57,17 @@ const ReservationView = styled.div`
 const VisitingReservationViewerPage = () => {
   const [reservationView, setReservationView] = useState("면회 예약"); // 현재 보고있는 예약 상태 처음에 면회 예약 내역들 보여준다.
 
+  const navigate = useNavigate();
+
   const viewBtnChange = (view) => {
     setReservationView(view);
   };
+
   return (
     <>
       <HeaderContainer>
         <Title>사과나무요양원 간편 예약 시스템 관리자</Title>
-        <Button>입소자 명부</Button>
+        <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
       </HeaderContainer>
       <ReservationControler>
         <ReservationView
