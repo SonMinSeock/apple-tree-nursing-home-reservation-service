@@ -17,6 +17,25 @@ const Title = styled.h1`
   font-size: 1.875rem;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const Button = styled.button`
+  font-size: 1.875rem;
+  padding: 1rem;
+  color: #ffffff;
+  background-color: #78d6bb;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: inherit;
+  &:hover {
+    background-color: #66c5a8;
+  }
+`;
+
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,6 +137,11 @@ const ElderyListPage = () => {
     <>
       <HeaderContainer>
         <Title>사과나무요양원 입소자 명부</Title>
+        <ButtonContainer>
+          <Button onClick={() => navigate("/admin/reservation-create")}>예약 생성</Button>
+          <Button onClick={() => navigate("/admin/elderly-create")}>입소자 작성</Button>
+          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
+        </ButtonContainer>
       </HeaderContainer>
 
       <Main>

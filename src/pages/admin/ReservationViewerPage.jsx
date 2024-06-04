@@ -75,11 +75,11 @@ const ReservationViewerPage = () => {
     <>
       <HeaderContainer>
         <Title>사과나무요양원 간편 예약 시스템 관리자</Title>
-        <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
-        {/* <ButtonContainer>
-          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 추가</Button>
-          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명단</Button>
-        </ButtonContainer> */}
+        <ButtonContainer>
+          <Button onClick={() => navigate("/admin/reservation-create")}>예약 생성</Button>
+          <Button onClick={() => navigate("/admin/elderly-create")}>입소자 작성</Button>
+          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
+        </ButtonContainer>
       </HeaderContainer>
       <ReservationControler>
         <ReservationView

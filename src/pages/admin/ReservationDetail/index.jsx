@@ -21,6 +21,25 @@ const Main = styled.main`
   padding: 1rem;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const Button = styled.button`
+  font-size: 1.875rem;
+  padding: 1rem;
+  color: #ffffff;
+  background-color: #78d6bb;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: inherit;
+  &:hover {
+    background-color: #66c5a8;
+  }
+`;
+
 const ReservationContainer = styled.section`
   display: flex;
   justify-content: space-between;
@@ -31,8 +50,7 @@ const ReservationContainer = styled.section`
 
 const ReservationInfoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   width: 30%;
   max-width: 400px;
 `;
@@ -81,7 +99,7 @@ const ReservationDetail = () => {
     };
 
     fetchGETReservations();
-  }, []);
+  }, [date, type]);
 
   const reservationDelete = async (reservationId) => {
     const res = await fetch(
@@ -97,13 +115,22 @@ const ReservationDetail = () => {
     if (!res.ok) {
       alert("예약 삭제 실패했습니다.");
     } else {
+      setReservations((prevReservations) =>
+        prevReservations.filter((reservation) => reservation.reservationId !== reservationId)
+      );
       alert("예약 삭제 성공했습니다.");
     }
   };
+
   return (
     <>
       <HeaderContainer>
         <Title>{`${type} 예약 ${date} ${day}`}</Title>
+        <ButtonContainer>
+          <Button onClick={() => navigate("/admin/reservation-create")}>예약 생성</Button>
+          <Button onClick={() => navigate("/admin/elderly-create")}>입소자 작성</Button>
+          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
+        </ButtonContainer>
       </HeaderContainer>
       <Main>
         {reservations.map((reservation) => (
@@ -126,7 +153,7 @@ const ReservationDetail = () => {
               >
                 수정
               </div>
-              <div onClick={reservationDelete.bind(null, reservation.reservationId)}>삭제</div>
+              <div onClick={() => reservationDelete(reservation.reservationId)}>삭제</div>
             </Controler>
           </ReservationContainer>
         ))}

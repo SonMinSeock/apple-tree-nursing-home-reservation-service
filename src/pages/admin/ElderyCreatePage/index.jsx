@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
@@ -15,6 +15,24 @@ const HeaderContainer = styled.header`
 
 const Title = styled.h1`
   font-size: 1.875rem;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  & button {
+    font-size: 1.875rem;
+    padding: 1rem;
+    color: #ffffff;
+    background-color: #78d6bb;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: inherit;
+    &:hover {
+      background-color: #66c5a8;
+    }
+  }
 `;
 
 const FormContainer = styled.form`
@@ -50,33 +68,26 @@ const Input = styled.input`
   }
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
 const Button = styled.button`
-  font-size: 1.875rem;
-  padding: 1rem;
-  color: #ffffff;
+  padding: 1rem 1.8rem;
+  font-size: 1.3rem;
   background-color: #78d6bb;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: inherit;
+  margin-top: 1rem;
   &:hover {
     background-color: #66c5a8;
   }
 `;
 
-const ElderyUpdatePage = () => {
-  const { elderyId } = useParams();
-  const {
-    state: { eldery },
-  } = useLocation();
+const ElderyCreatePage = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState(eldery.name);
-  const [floor, setFloor] = useState(eldery.floor);
+
+  const [name, setName] = useState("");
+  const [floor, setFloor] = useState(1);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -90,30 +101,36 @@ const ElderyUpdatePage = () => {
     event.preventDefault();
     // Form submission logic here
 
-    const updatedEldery = {
+    if (name.length < 3 || name.length === 0) {
+      alert("이름 3글자 이내 작성해야 합니다.");
+      return;
+    }
+
+    const createdEldery = {
       name,
       floor,
     };
 
-    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly/${elderyId}`, {
-      method: "PUT",
+    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedEldery),
+      body: JSON.stringify(createdEldery),
     });
 
     if (res.ok) {
-      navigate("/admin");
+      alert("입소자 생성 성공했습니다.");
+      navigate("/");
     } else {
-      alert("입소자 수정 실패했습니다.");
+      alert("입소자 생성 실패했습니다.");
     }
   };
 
   return (
     <>
       <HeaderContainer>
-        <Title>000 어르신 명부 수정</Title>
+        <Title>입소자 명부 작성</Title>
         <ButtonContainer>
           <Button onClick={() => navigate("/admin/reservation-create")}>예약 생성</Button>
           <Button onClick={() => navigate("/admin/elderly-create")}>입소자 작성</Button>
@@ -137,10 +154,10 @@ const ElderyUpdatePage = () => {
           <Input type="number" id="floor" value={floor} onChange={handleFloorChange} min={1} max={4} />
         </div>
 
-        <Button type="submit">수정 하기</Button>
+        <Button type="submit">생성 하기</Button>
       </FormContainer>
     </>
   );
 };
 
-export default ElderyUpdatePage;
+export default ElderyCreatePage;

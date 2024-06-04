@@ -12,6 +12,8 @@ import ReservationDetail from "../pages/admin/ReservationDetail";
 import ReservationUpdatePage from "../pages/admin/ReservationUpdate";
 import ElderyUpdatePage from "../pages/admin/ElderyUpdatePage/ElderyUpdatePage";
 import ReservationViewerPage from "../pages/admin/ReservationViewerPage";
+import ElderyCreatePage from "../pages/admin/ElderyCreatePage";
+import ReservationCreatePage from "../pages/admin/ReservationCreatePage";
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ export const router = createBrowserRouter([
                 element: <ElderyUpdatePage />,
               },
             ],
+          },
+          {
+            path: "elderly-create",
+            element: <ElderyCreatePage />,
+          },
+          {
+            path: "reservation-create",
+            element: <ReservationCreatePage />,
           },
           {
             path: "reservation-detail",

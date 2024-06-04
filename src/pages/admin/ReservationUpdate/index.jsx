@@ -133,16 +133,10 @@ const ReservationUpdatePage = () => {
         </div>
         <div>
           <Label htmlFor="meal-select">식사 여부</Label>
-          <Select id="meal-select" defaultValue={meal} onChange={handleMealChange}>
-            <option value="DEFAULT" selected={meal !== "OUTSIDE" || meal !== "INSIDE"}>
-              기본
-            </option>
-            <option value="INSIDE" selected={meal === "INSIDE"}>
-              실내 식사
-            </option>
-            <option value="OUTSIDE" selected={meal === "OUTSIDE"}>
-              실외 식사
-            </option>
+          <Select id="meal-select" value={meal} onChange={handleMealChange}>
+            <option value="DEFAULT">기본</option>
+            <option value="INSIDE">실내 식사</option>
+            <option value="OUTSIDE">실외 식사</option>
           </Select>
         </div>
         <Button type="submit">수정 하기</Button>
