@@ -141,7 +141,7 @@ const ReservationCreatePage = () => {
       createdReservation.meal = meal;
     }
 
-    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservations`, {
+    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservations/admin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const ReservationCreatePage = () => {
 
     if (res.ok) {
       alert("예약 생성 성공했습니다.");
-      navigate("/");
+      navigate("/admin");
     } else {
       alert("예약 생성 실패 했습니다.");
     }

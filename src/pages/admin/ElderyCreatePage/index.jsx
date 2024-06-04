@@ -121,7 +121,7 @@ const ElderyCreatePage = () => {
 
     if (res.ok) {
       alert("입소자 생성 성공했습니다.");
-      navigate("/");
+      navigate("/admin");
     } else {
       alert("입소자 생성 실패했습니다.");
     }

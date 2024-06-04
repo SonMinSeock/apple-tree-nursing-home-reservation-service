@@ -123,16 +123,21 @@ const ElderyListPage = () => {
   }, []);
 
   const elderyDelete = async (elderyId) => {
-    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly/${elderyId}`);
+    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly/${elderyId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!res.ok) {
       alert("입소자 명부 삭제 실패했습니다.");
     } else {
+      setElderyList((prevElderyList) => prevElderyList.filter((eldery) => eldery.elderlyId !== elderyId));
       alert("입소자 명부 삭제 성공했습니다.");
     }
   };
 
-  console.log(elderyList);
   return (
     <>
       <HeaderContainer>
@@ -161,7 +166,7 @@ const ElderyListPage = () => {
                     >
                       수정
                     </span>
-                    <span onClick={elderyDelete.bind(eldery.elderlyId)}>삭제</span>
+                    <span onClick={elderyDelete.bind(null, eldery.elderlyId)}>삭제</span>
                   </Cell>
                 </Row>
                 {[...Array(5)].map((_, index) => (
