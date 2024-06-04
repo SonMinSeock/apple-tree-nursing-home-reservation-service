@@ -19,6 +19,11 @@ const Title = styled.h1`
   font-size: 1.875rem;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const Button = styled.button`
   font-size: 1.875rem;
   padding: 1rem;
@@ -28,6 +33,9 @@ const Button = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-weight: inherit;
+  &:hover {
+    background-color: #66c5a8;
+  }
 `;
 
 const ReservationControler = styled.div`
@@ -54,7 +62,7 @@ const ReservationView = styled.div`
   }
 `;
 
-const VisitingReservationViewerPage = () => {
+const ReservationViewerPage = () => {
   const [reservationView, setReservationView] = useState("면회 예약"); // 현재 보고있는 예약 상태 처음에 면회 예약 내역들 보여준다.
 
   const navigate = useNavigate();
@@ -68,6 +76,10 @@ const VisitingReservationViewerPage = () => {
       <HeaderContainer>
         <Title>사과나무요양원 간편 예약 시스템 관리자</Title>
         <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
+        {/* <ButtonContainer>
+          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 추가</Button>
+          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명단</Button>
+        </ButtonContainer> */}
       </HeaderContainer>
       <ReservationControler>
         <ReservationView
@@ -89,4 +101,4 @@ const VisitingReservationViewerPage = () => {
   );
 };
 
-export default VisitingReservationViewerPage;
+export default ReservationViewerPage;

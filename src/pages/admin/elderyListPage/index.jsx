@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
@@ -44,6 +45,9 @@ const Cell = styled.div`
   justify-content: center;
   align-items: center;
   flex: 1;
+  &.controller span {
+    cursor: pointer;
+  }
   &.controller span:first-child {
     margin-right: 1rem;
   }
@@ -67,9 +71,49 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  padding: 1rem;
 `;
 
 const ElderyListPage = () => {
+  const navigate = useNavigate();
+  const [elderyList, setElderyList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGetElderyList = async () => {
+      try {
+        const res = await fetch("https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly", {
+          method: "GET",
+          credentials: "include", // 쿠키를 포함하려면
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer token",
+          },
+          mode: "cors",
+        });
+        const datas = await res.json();
+        console.log(datas);
+        setElderyList((prev) => [...prev, ...datas]);
+        setLoading(false);
+      } catch (error) {
+        alert("입소자 명단 읽어오는 도중에 실패했습니다.");
+      }
+    };
+
+    fetchGetElderyList();
+  }, []);
+
+  const elderyDelete = async (elderyId) => {
+    const res = await fetch(`https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/elderly/${elderyId}`);
+
+    if (!res.ok) {
+      alert("입소자 명부 삭제 실패했습니다.");
+    } else {
+      alert("입소자 명부 삭제 성공했습니다.");
+    }
+  };
+
+  console.log(elderyList);
   return (
     <>
       <HeaderContainer>
@@ -77,82 +121,34 @@ const ElderyListPage = () => {
       </HeaderContainer>
 
       <Main>
-        <TableContainer>
-          <Row>
-            <FloorHeader>1층</FloorHeader>
-            <WhiteHeader></WhiteHeader>
-          </Row>
-          <Row>
-            <Cell>이름</Cell>
-            <Cell className="controller">
-              <span>수정</span>
-              <span>삭제</span>
-            </Cell>
-          </Row>
-          {[...Array(5)].map((_, index) => (
-            <Row key={index}>
-              <Cell></Cell>
-              <Cell></Cell>
-            </Row>
-          ))}
-        </TableContainer>
-        <TableContainer>
-          <Row>
-            <FloorHeader>1층</FloorHeader>
-            <WhiteHeader></WhiteHeader>
-          </Row>
-          <Row>
-            <Cell>이름</Cell>
-            <Cell className="controller">
-              <span>수정</span>
-              <span>삭제</span>
-            </Cell>
-          </Row>
-          {[...Array(5)].map((_, index) => (
-            <Row key={index}>
-              <Cell></Cell>
-              <Cell></Cell>
-            </Row>
-          ))}
-        </TableContainer>
-        <TableContainer>
-          <Row>
-            <FloorHeader>1층</FloorHeader>
-            <WhiteHeader></WhiteHeader>
-          </Row>
-          <Row>
-            <Cell>이름</Cell>
-            <Cell className="controller">
-              <span>수정</span>
-              <span>삭제</span>
-            </Cell>
-          </Row>
-          {[...Array(5)].map((_, index) => (
-            <Row key={index}>
-              <Cell></Cell>
-              <Cell></Cell>
-            </Row>
-          ))}
-        </TableContainer>
-        <TableContainer>
-          <Row>
-            <FloorHeader>1층</FloorHeader>
-            <WhiteHeader></WhiteHeader>
-          </Row>
-          <Row>
-            <Cell>이름</Cell>
-            <Cell className="controller">
-              <span>수정</span>
-              <span>삭제</span>
-            </Cell>
-          </Row>
-          {[...Array(5)].map((_, index) => (
-            <Row key={index}>
-              <Cell></Cell>
-              <Cell></Cell>
-            </Row>
-          ))}
-        </TableContainer>
+        {!loading &&
+          elderyList.map((eldery) => {
+            return (
+              <TableContainer key={eldery.elderlyId}>
+                <Row>
+                  <FloorHeader>{`${eldery.floor}층`}</FloorHeader>
+                  <WhiteHeader></WhiteHeader>
+                </Row>
+                <Row>
+                  <Cell>{eldery.name}</Cell>
+                  <Cell className="controller">
+                    <span
+                      onClick={() => navigate(`/admin/elderly-list/${eldery.elderlyId}/update`, { state: { eldery } })}
+                    >
+                      수정
+                    </span>
+                    <span onClick={elderyDelete.bind(eldery.elderlyId)}>삭제</span>
+                  </Cell>
+                </Row>
+                {[...Array(5)].map((_, index) => (
+                  <Row key={index}>
+                    <Cell></Cell>
+                    <Cell></Cell>
+                  </Row>
+                ))}
+              </TableContainer>
+            );
+          })}
       </Main>
     </>
   );

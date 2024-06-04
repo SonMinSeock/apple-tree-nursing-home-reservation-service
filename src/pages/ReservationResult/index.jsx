@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../../components/reservation/atoms/Button/Button.style";
 import Container from "../../components/reservation/templates/Container";
@@ -41,7 +41,8 @@ const ReservationResultPage = () => {
     state: { reservation },
   } = useLocation();
 
-  console.log(reservation);
+  const navigate = useNavigate();
+
   const renderDate = `${reservation.date.split("-")[1]}월 ${reservation.date.slice("-")[2]}일`;
   return (
     <>
@@ -56,7 +57,9 @@ const ReservationResultPage = () => {
           <Span>{`${renderDate} ${reservation.time.timeFormat} ${reservation.time.clientTime}`}</Span>
         </Flexbox>
         <Text>조회하기를 통해 예약을 확인할 수 있습니다.</Text>
-        <Button className="activate">확인</Button>
+        <Button className="activate" onClick={() => navigate("/")}>
+          확인
+        </Button>
       </Container>
     </>
   );
