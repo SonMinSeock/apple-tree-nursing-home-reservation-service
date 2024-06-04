@@ -345,7 +345,7 @@ function Calender({ reservation, setSelectDate, selectDate }) {
           formattedDay={formattedDay}
           selectDate={selectDate}
           setSelectDate={setSelectDate}
-          availableDates={["2024-06-04", "2024-06-05", "2024-06-07"]} // availableDates 추가
+          availableDates={availableDates} // availableDates 추가
         />
       );
       startDay = addDays(startDay, 1); // 하루를 삽입하고 날짜를 하루 더해줍니다.

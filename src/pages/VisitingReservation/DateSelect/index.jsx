@@ -42,7 +42,7 @@ const DateSelectPage = () => {
             reservationType: reservation.type,
             elderlyId: reservation.elderlyId,
             reservationDate: selectDate,
-            reservationTime: selectTime,
+            reservationTime: postReservation.time,
             guardianRelation: reservation.relationship,
           }),
         });

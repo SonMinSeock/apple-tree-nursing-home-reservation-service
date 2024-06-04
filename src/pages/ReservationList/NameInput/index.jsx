@@ -14,17 +14,43 @@ import { Button } from "../../../components/reservation/atoms/Button/Button.styl
 const NameInputPage = () => {
   const location = useLocation(); // useLocation 훅을 사용하여 이전 페이지의 state를 받아옵니다.
   const [name, setName] = useState(location.state?.name || ""); // useState의 초기값을 이전에 입력한 이름으로 설정합니다.
+
+  //const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const onChange = (event) => {
     setName(event.target.value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     if (name.length === 3) {
+      const reservations = [];
+      try {
+        const response = await fetch(
+          `https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservation/by-name?name=${name}`,
+          {
+            method: "GET",
+            credentials: "include", // 쿠키를 포함하려면
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer token",
+            },
+            mode: "cors",
+          }
+        );
+        if (!response.ok) {
+          alert("예약조회 서버 에러");
+        }
+
+        const getReservations = await response.json();
+        reservations = [...getReservations];
+      } catch (error) {
+        //setError("어르신 예약 조회 하는데 실패했습니다. 다시 시도해주세요.");
+        alert("어르신 예약 조회 하는데 실패했습니다. 다시 시도해주세요.");
+      }
       navigate("/reservation-check/list", {
-        state: { name },
+        state: { name, reservations },
       });
     }
   };

@@ -34,13 +34,28 @@ const WheterToEatPage = () => {
   } = useLocation();
   const navigate = useNavigate();
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     const enteredWheterToEat = selectWheterToEat;
 
     if (enteredWheterToEat) {
       reservation.wheterToEat = enteredWheterToEat;
       postReservation.wheterToEat = enteredWheterToEat;
+
+      await fetch("https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reservationType: reservation.type,
+          elderlyId: reservation.elderlyId,
+          reservationDate: reservation.selectDate,
+          reservationTime: postReservation.time,
+          guardianRelation: reservation.relationship,
+          meal: reservation.wheterToEat === "원외 식사" ? "OUTSIDE" : "INSIDE",
+        }),
+      });
 
       navigate("/outingReservation/result", {
         state: { reservation },
