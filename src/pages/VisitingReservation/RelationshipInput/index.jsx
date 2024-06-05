@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Container from "../../../components/reservation/templates/Container";
 import Header from "../../../components/reservation/molecules/Header";
 import { Title } from "../../../components/reservation/atoms/Title/Title.style";
@@ -12,7 +12,8 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { Label } from "../../../components/reservation/atoms/Label/Label.style";
 
 const RelationshipInputPage = () => {
-  const relationshipInputRef = useRef();
+  const [relationshipInput, setRelationshipInput] = useState("");
+
   const navigate = useNavigate();
 
   const {
@@ -20,12 +21,14 @@ const RelationshipInputPage = () => {
   } = useLocation();
   console.log(reservation);
 
+  const onChange = (event) => {
+    setRelationshipInput(event.target.value);
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
-    const enteredRelationship = relationshipInputRef.current.value;
-
-    if (enteredRelationship) {
-      reservation.relationship = enteredRelationship;
+    if (relationshipInput) {
+      reservation.relationship = relationshipInput;
       navigate("/visitingReservation/date-select", {
         state: { reservation },
       });
@@ -44,9 +47,11 @@ const RelationshipInputPage = () => {
         <Form onSubmit={onSubmit}>
           <Wrapper>
             <Label>관계</Label>
-            <Input type="text" ref={relationshipInputRef} placeholder="딸, 아들" />
+            <Input type="text" placeholder="딸, 아들" onChange={onChange} />
           </Wrapper>
-          <Button>다음</Button>
+          <Button className={relationshipInput && "activate"} disabled={!relationshipInput}>
+            다음
+          </Button>
         </Form>
       </Container>
     </>

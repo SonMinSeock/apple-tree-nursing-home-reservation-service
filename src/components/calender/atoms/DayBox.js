@@ -7,6 +7,7 @@ const StyleDayBox = styled.div`
   align-items: center;
   height: 4.3rem;
 `;
+
 function DayBox({ days }) {
   return <StyleDayBox>{days}</StyleDayBox>;
 }
