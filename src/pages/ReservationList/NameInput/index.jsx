@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Container from "../../../components/reservation/templates/Container";
 import { BackBar } from "../../../components/reservation/molecules/BackBar/BackBar.style";
 import Header from "../../../components/reservation/molecules/Header";
@@ -7,17 +7,28 @@ import Wrapper from "../../../components/reservation/molecules/Wrapper";
 import { Label } from "../../../components/reservation/atoms/Label/Label.style";
 import { Input } from "../../../components/reservation/atoms/Input/Input.style";
 import Form from "../../../components/reservation/molecules/Form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Title } from "../../../components/reservation/atoms/Title/Title.style";
 import { Button } from "../../../components/reservation/atoms/Button/Button.style";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGetReservationList } from "../../../store/actions/reservationActions";
+import { reservationActions } from "../../../store/slices/reservationSlice";
 
 const NameInputPage = () => {
-  const location = useLocation(); // useLocation 훅을 사용하여 이전 페이지의 state를 받아옵니다.
-  const [name, setName] = useState(location.state?.name || ""); // useState의 초기값을 이전에 입력한 이름으로 설정합니다.
-  const [resrvations, serReservations] = useState([]);
+  const storedReservationList = useSelector((state) => state.reservation.getList); // 리덕스에서 저장된 예약자 내역.
+
+  const [name, setName] = useState(storedReservationList.name || ""); // useState의 초기값을 이전에 입력한 이름으로 설정합니다.
+  //const [resrvations, serReservations] = useState([]);
+  const dispatch = useDispatch();
 
   //const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (storedReservationList.list.length > 0) {
+      dispatch(reservationActions.resetList());
+    }
+  }, [dispatch, storedReservationList.list.length]);
 
   const onChange = (event) => {
     setName(event.target.value);
@@ -26,7 +37,16 @@ const NameInputPage = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (name.length === 3) {
-      let reservations = [];
+      //let reservations = [];
+      dispatch(reservationActions.setName(name));
+      try {
+        await dispatch(fetchGetReservationList(name));
+        navigate("/reservation-check/list");
+      } catch (error) {
+        console.log(error);
+        alert("어르신 예약 조회 하는데 실패했습니다. 다시 시도해주세요.");
+      }
+      /*
       try {
         const response = await fetch(
           `https://port-0-apple-tree-v1-1mrfs72llwuqd2yb.sel5.cloudtype.app/reservations/by-name?name=${name}`,
@@ -54,7 +74,7 @@ const NameInputPage = () => {
         //setError("어르신 예약 조회 하는데 실패했습니다. 다시 시도해주세요.");
         console.log(error);
         alert("어르신 예약 조회 하는데 실패했습니다. 다시 시도해주세요.");
-      }
+      }*/
     }
   };
 

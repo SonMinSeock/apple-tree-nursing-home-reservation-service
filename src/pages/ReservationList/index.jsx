@@ -5,8 +5,9 @@ import { FaAngleLeft } from "react-icons/fa6";
 import Header from "../../components/reservation/molecules/Header";
 import { Title } from "../../components/reservation/atoms/Title/Title.style";
 import styled from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
+import { useSelector } from "react-redux";
 
 const Section = styled.section`
   display: flex;
@@ -64,9 +65,10 @@ const NoReservationsTitle = styled.h2`
 
 const ReservationListPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const name = location.state?.name || "고객님"; // 이전 페이지에서 전달된 이름 불러오기
-  const reservations = location.state?.reservations || [];
+
+  const reservationListData = useSelector((state) => state.reservation.getList); // 리덕스 저장된 예약내역 데이터.
+  const name = reservationListData.name || "고객님"; // 이전 페이지에서 전달된 이름 불러오기
+  const reservations = reservationListData.list.length > 0 ? reservationListData.list : [];
 
   console.log(reservations);
   const formatTimeToAmPm = (time) => {
