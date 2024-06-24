@@ -1,39 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #78d6bb;
-  color: #ffffff;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const Title = styled.h1`
-  font-size: 1.875rem;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  & button {
-    font-size: 1.875rem;
-    padding: 1rem;
-    color: #ffffff;
-    background-color: #78d6bb;
-    border: 2px solid #ffffff;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: inherit;
-    &:hover {
-      background-color: #66c5a8;
-    }
-  }
-`;
+import AdminNav from "../../../components/navbar/AdminNav";
 
 const FormContainer = styled.form`
   display: flex;
@@ -129,14 +97,7 @@ const ElderyCreatePage = () => {
 
   return (
     <>
-      <HeaderContainer>
-        <Title>입소자 명부 작성</Title>
-        <ButtonContainer>
-          <Button onClick={() => navigate("/admin/reservation-create")}>예약 생성</Button>
-          <Button onClick={() => navigate("/admin/elderly-create")}>입소자 작성</Button>
-          <Button onClick={() => navigate("/admin/elderly-list")}>입소자 명부</Button>
-        </ButtonContainer>
-      </HeaderContainer>
+      <AdminNav />
       <FormContainer onSubmit={handleSubmit}>
         <div>
           <Label htmlFor="eldery-name">이름</Label>
