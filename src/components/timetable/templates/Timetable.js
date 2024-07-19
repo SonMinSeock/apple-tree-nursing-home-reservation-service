@@ -129,6 +129,24 @@ const Container = styled.div`
 function Timetable({ reservation, selectedTime, setSelectTime, type, selectDate }) {
   const [availableTimes, setAvailableTimes] = useState([]);
 
+  const times = [];
+
+  const handleChange = (event) => {
+    selectedTime(event.target.value);
+  };
+
+  // 08:30 부터 16:00까지 10분 간격으로 시간을 추가
+  for (let h = 8; h < 16 || (h === 16 && times[times.length - 1] !== "16:00"); h++) {
+    for (let m = 0; m < 60; m += 10) {
+      const hour = h.toString().padStart(2, "0");
+      const minute = m.toString().padStart(2, "0");
+      const time = `${hour}:${minute}`;
+      if (time >= "08:30" && time <= "16:00") {
+        times.push(time);
+      }
+    }
+  }
+
   const fetchGetReservationTimes = async () => {
     try {
       const response = await fetch(
@@ -211,7 +229,17 @@ function Timetable({ reservation, selectedTime, setSelectTime, type, selectDate 
 
   return (
     <Container>
-      <TimeRow timeTable={availableTimes} onTimeClick={handleTimeClick} />
+      {type !== "OUTING" ? (
+        <TimeRow timeTable={availableTimes} onTimeClick={handleTimeClick} />
+      ) : (
+        <select name="clientTime" onChange={handleChange}>
+          {times.map((time, index) => (
+            <option key={index} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+      )}
     </Container>
   );
 }
